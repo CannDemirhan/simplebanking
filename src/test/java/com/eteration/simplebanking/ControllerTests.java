@@ -34,7 +34,6 @@ class ControllerTests  {
  
     @Mock
     private AccountService service;
-
     
     @Test
     public void givenId_Credit_thenReturnJson()
@@ -47,7 +46,6 @@ class ControllerTests  {
         verify(service, times(1)).findAccount("17892");
         assertEquals("OK", result.getBody().getStatus());
     }
-
     @Test
     public void givenId_CreditAndThenDebit_thenReturnJson()
     throws Exception {
@@ -62,7 +60,6 @@ class ControllerTests  {
         assertEquals("OK", result2.getBody().getStatus());
         assertEquals(950.0, account.getBalance(),0.001);
     }
-
     @Test
     public void givenId_CreditAndThenDebitMoreGetException_thenReturnJson()
     throws Exception {
@@ -78,7 +75,6 @@ class ControllerTests  {
             ResponseEntity<TransactionStatus> result2 = controller.debit( "17892", new WithdrawalTransaction(5000.0));
         });
     }
-
     @Test
     public void givenId_GetAccount_thenReturnJson()
     throws Exception {
@@ -90,5 +86,4 @@ class ControllerTests  {
         verify(service, times(1)).findAccount("17892");
         assertEquals(account, result.getBody());
     }
-
 }

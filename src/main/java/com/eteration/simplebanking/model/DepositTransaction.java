@@ -1,6 +1,20 @@
 package com.eteration.simplebanking.model;
 
+import lombok.NoArgsConstructor;
 
-// This class is a place holder you can change the complete implementation
-public class DepositTransaction  {
+import javax.persistence.Entity;
+import java.util.Date;
+import java.util.UUID;
+
+// This class is a placeholder you can change the complete implementation
+@NoArgsConstructor
+@Entity
+public class DepositTransaction extends Transaction{
+
+    public DepositTransaction(int amount) {
+        super(new Date(System.currentTimeMillis()), "DepositTransaction", (double)amount, UUID.randomUUID().toString());
+    }
+    public DepositTransaction(Double amount) {
+        super(new Date(System.currentTimeMillis()), "DepositTransaction", amount, UUID.randomUUID().toString());
+    }
 }
