@@ -18,6 +18,11 @@ public class WithdrawalTransaction extends Transaction{
     public WithdrawalTransaction(Double amount) {
         super(new Date(System.currentTimeMillis()), "WithdrawalTransaction", amount, UUID.randomUUID().toString());
     }
+
+    @Override
+    public void doTransaction() throws InsufficientBalanceException {
+        super.debit(super.getAmount());
+    }
 }
 
 

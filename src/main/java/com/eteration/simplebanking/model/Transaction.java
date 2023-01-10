@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 // This class is a placeholder you can change the complete implementation
@@ -30,10 +32,25 @@ public abstract class Transaction {
     private String type;
 	private Double amount;
     private String approvalCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account account;
+
     public Transaction(Date date, String type, Double amount, String approvalCode){
         this.date = date;
         this.type = type;
         this.amount = amount;
         this.approvalCode = approvalCode;
+    }
+
+    public abstract void doTransaction() throws InsufficientBalanceException;
+
+    public void credit(Double amount){
+        getAccount().setBalance(getAccount().getBalance() + amount);
+    }
+    public void debit(Double amount) throws InsufficientBalanceException {
+        if(getAccount().getBalance() < amount){
+            throw new InsufficientBalanceException();
+        }
+        getAccount().setBalance(getAccount().getBalance() - amount);
     }
 }

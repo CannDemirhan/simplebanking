@@ -17,4 +17,9 @@ public class DepositTransaction extends Transaction{
     public DepositTransaction(Double amount) {
         super(new Date(System.currentTimeMillis()), "DepositTransaction", amount, UUID.randomUUID().toString());
     }
+
+    @Override
+    public void doTransaction() {
+        super.credit(super.getAmount());
+    }
 }
