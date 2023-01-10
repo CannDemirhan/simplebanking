@@ -46,10 +46,13 @@ public class Account {
     }
 
     public void post(Transaction transaction) throws InsufficientBalanceException {
+        transaction.setAccount(this);
         if("DepositTransaction".equals(transaction.getType())){
             credit(transaction.getAmount());
         }else if("WithdrawalTransaction".equals(transaction.getType())){
             debit(transaction.getAmount());
+        }else{
+            transaction.doTransaction();
         }
         getTransactions().add(transaction);
     }
